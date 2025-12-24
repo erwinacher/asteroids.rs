@@ -64,3 +64,6 @@ That means:
 - JS only needs await init()
 
 If you import or call run from JavaScript, the WASM module will fail to initialize.
+
+<img width="981" height="772" alt="image" src="https://github.com/user-attachments/assets/b57c6201-acff-4710-8744-1ee25d9f3c8e" />
+
