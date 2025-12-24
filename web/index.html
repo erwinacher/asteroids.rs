@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Asteroids - Bevy WASM</title>
+
+    <!-- Make the viewport match the window size -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #111;
+        overflow: hidden;
+      }
+
+      /* Let Bevy manage the canvas size; we only remove margins. */
+      canvas {
+        display: block;
+      }
+
+      /* Controls overlay (optional) */
+      .controls {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .controls-left,
+      .controls-right {
+        display: flex;
+        gap: 12px;
+        pointer-events: auto;
+      }
+
+      .ctrl-btn {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 1px solid #666;
+        background: rgba(40, 40, 40, 0.8);
+        color: #eee;
+        font-size: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: none;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>This game requires JavaScript.</noscript>
+
+    <!-- On-screen controls; remove this whole block if you don't want them -->
+    <div class="controls">
+      <div class="controls-left">
+        <div class="ctrl-btn" id="btn-left">◀</div>
+        <div class="ctrl-btn" id="btn-right">▶</div>
+        <div class="ctrl-btn" id="btn-up">▲</div>
+      </div>
+      <div class="controls-right">
+        <div class="ctrl-btn" id="btn-fire">⦿</div>
+      </div>
+    </div>
+
+    <script type="module">
+      import init, {
+        mobile_left_down,
+        mobile_left_up,
+        mobile_right_down,
+        mobile_right_up,
+        mobile_up_down,
+        mobile_up_up,
+        mobile_fire,
+      } from "./asteroids.js";
+
+      function bindHoldButton(elem, downFn, upFn) {
+        const start = (e) => {
+          e.preventDefault();
+          downFn();
+        };
+        const end = (e) => {
+          e.preventDefault();
+          upFn();
+        };
+
+        elem.addEventListener("touchstart", start, { passive: false });
+        elem.addEventListener("touchend", end, { passive: false });
+        elem.addEventListener("touchcancel", end, { passive: false });
+        elem.addEventListener("mousedown", start);
+        elem.addEventListener("mouseup", end);
+        elem.addEventListener("mouseleave", end);
+      }
+
+      function bindTapButton(elem, tapFn) {
+        const tap = (e) => {
+          e.preventDefault();
+          tapFn();
+        };
+        elem.addEventListener("touchstart", tap, { passive: false });
+        elem.addEventListener("mousedown", tap);
+      }
+
+      function setupTouchControls() {
+        const left = document.getElementById("btn-left");
+        const right = document.getElementById("btn-right");
+        const up = document.getElementById("btn-up");
+        const fire = document.getElementById("btn-fire");
+
+        if (!left || !right || !up || !fire) return;
+
+        bindHoldButton(left, mobile_left_down, mobile_left_up);
+        bindHoldButton(right, mobile_right_down, mobile_right_up);
+        bindHoldButton(up, mobile_up_down, mobile_up_up);
+        bindTapButton(fire, mobile_fire);
+      }
+
+      async function main() {
+        await init(); // load wasm
+        setupTouchControls();
+      }
+
+      main();
+    </script>
+  </body>
+</html>

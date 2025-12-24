@@ -1,0 +1,35 @@
+# ===== Rust =====
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# ===== WASM / wasm-bindgen =====
+web/*.wasm
+web/*.js
+web/*.map
+
+# ===== Node / JS tooling (if used) =====
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== Web / Static Server =====
+dist/
+build/
+out/
+*.log
+
+# ===== OS / Editor =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*.tmp
+
+# ===== Misc =====
+.env
+.env.*
+

@@ -1,0 +1,40 @@
+# [package]
+# name = "asteroids"
+# version = "0.1.0"
+# edition = "2021"
+
+
+# [target.'cfg(target_arch = "wasm32")'.lib]
+# path = "src/wasm.rs"
+
+# [lib]
+# name = "asteroids"
+# crate-type = ["cdylib", "rlib"]
+
+# [[bin]]
+# name = "asteroids"
+# path = "src/main.rs"
+
+# [dependencies]
+# bevy = "0.17.2"
+# rand = "0.9.1"
+
+
+[package]
+name = "asteroids"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "asteroidslib"
+crate-type = ["cdylib", "rlib"]
+path = "src/lib.rs"
+
+[[bin]]
+name = "asteroids"
+path = "src/main.rs"
+
+[dependencies]
+bevy = "0.17.2"
+rand = "0.9.1"
+wasm-bindgen = "0.2"
